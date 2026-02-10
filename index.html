@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Knock Knock</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        overflow-y: auto;
+        background:
+          linear-gradient(rgba(255, 214, 232, 0.55), rgba(255, 214, 232, 0.55)),
+          url("https://img.freepik.com/premium-vector/bear-doll-with-cakes-design-seamless-pattern_62298-77.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .page {
+        display: none;
+        min-height: 100vh;
+        width: 100%;
+        text-align: center;
+        padding: 80px 0;
+      }
+
+      .active {
+        display: block;
+      }
+
+      /* ---------- POSTCARD ---------- */
+      .card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        width: 85%;
+        max-width: 420px;
+        margin: auto;
+        padding: 30px;
+        border-radius: 22px;
+        box-shadow: 0 10px 30px rgba(235, 111, 152, 0.35);
+      }
+
+      h1 {
+        color: hotpink;
+      }
+
+      p {
+        margin-top: 15px;
+        font-size: 18px;
+      }
+
+      .btn {
+        background: #ff4d88;
+        color: white;
+        border: none;
+        padding: 12px 26px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      /* ---------- GIFT ---------- */
+      .gift-gif {
+        width: 160px;
+        margin: 25px auto;
+        cursor: pointer;
+        animation: float 2s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /* ---------- QUIZ ---------- */
+      .quiz-buttons {
+        margin-top: 20px;
+        position: relative;
+        height: 90px;
+      }
+
+      .no-btn {
+        background: #ccc;
+        color: #333;
+        position: absolute;
+      }
+
+      /* ---------- TEDDY GAME ---------- */
+      .teddies {
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        margin-top: 30px;
+      }
+
+      .teddy {
+        font-size: 80px;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .teddy:hover {
+        transform: scale(1.2);
+      }
+
+      /* ---------- POPUP ---------- */
+      .popup {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+
+      .popup-content {
+        background: #fff0f7;
+        padding: 30px;
+        border-radius: 15px;
+        width: 300px;
+        text-align: center;
+      }
+
+      /* ---------- FINAL PAGE ---------- */
+      .doll {
+        display: flex;
+        justify-content: center;
+        animation: pop 1.2s infinite alternate;
+      }
+
+      .doll img {
+        width: 100%;
+        max-width: 260px;
+        border-radius: 18px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      @keyframes pop {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-20px);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+      <div class="card">
+        <h1>Ready to Unlock The Surprise?</h1>
+
+        <img
+          src="https://i.pinimg.com/originals/f2/30/ce/f230cec0befdcb9fa58e8548d5faf00f.gif"
+          class="gift-gif"
+          onclick="showMessage()"
+          alt="Gift"
+        />
+
+        <p id="msg"></p>
+
+        <button
+          class="btn"
+          id="continueBtn"
+          onclick="goToPage(2)"
+          style="display: none"
+        >
+          Surprise
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+      <div class="card">
+        <!-- QUIZ -->
+        <div id="quizSection">
+          <h1>Quick Question 😌</h1>
+          <p>Am I your only girlfriend?</p>
+
+          <div class="quiz-buttons">
+            <button class="btn" onclick="acceptQuiz()">Yes 💕</button>
+            <button class="btn no-btn" id="noBtn">No 🙃</button>
+          </div>
+        </div>
+
+        <!-- GAME -->
+        <div id="gameSection" style="display: none">
+          <h1>Pick the Right Teddy🧸</h1>
+          <p>Only one teddy opens the surprise</p>
+
+          <div class="teddies">
+            <div
+              class="teddy"
+              onclick="lose('You lost 😜<br>Take me out for a coffee ')"
+            >
+              🧸
+            </div>
+            <div
+              class="teddy"
+              onclick="lose('You lost 😝<br>Text & call me every day ')"
+            >
+              🧸
+            </div>
+            <div class="teddy" onclick="goToPage(3)">🧸</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page" id="page3">
+      <div class="card">
+        <div class="doll">
+          <img
+            src="https://i.pinimg.com/736x/32/5d/8f/325d8ff6346e33e47d714f89e2520f84.jpg"
+            alt="Teddy"
+          />
+        </div>
+        <h1>Happy Teddy Day 💗</h1>
+        <p>This teddy brings all my hugs for you !!!! 🤗</p>
+      </div>
+    </div>
+
+    <!-- POPUP -->
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <p id="popupText"></p>
+        <button class="btn" onclick="closePopup()">Okay</button>
+      </div>
+    </div>
+
+    <script>
+      function showMessage() {
+        document.getElementById("msg").innerHTML =
+          "You need to play the below game to open your surprise";
+        document.getElementById("continueBtn").style.display = "inline-block";
+      }
+
+      function goToPage(num) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("page" + num).classList.add("active");
+      }
+
+      function lose(text) {
+        document.getElementById("popupText").innerHTML = text;
+        document.getElementById("popup").style.display = "flex";
+      }
+
+      function closePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+
+      function acceptQuiz() {
+        document.getElementById("quizSection").style.display = "none";
+        document.getElementById("gameSection").style.display = "block";
+      }
+
+      const noBtn = document.getElementById("noBtn");
+      noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * 200 - 100;
+        const y = Math.random() * 40;
+        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    </script>
+  </body>
+</html>
